@@ -48,7 +48,7 @@ export default {
           this.password
         );
         console.log("Se inició sesión");
-        this.$router.push('/in');
+        this.$router.push({name : 'in'});
       } catch (e) {
         console.log(e.message);
       }

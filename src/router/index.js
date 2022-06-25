@@ -19,6 +19,9 @@ const routes = [
     path: '/in',
     name: 'in',
     component: PlataformaView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
@@ -41,7 +44,7 @@ const routes = [
     name: 'admin',
     component: AdminView,
     meta: {
-      auth: true
+      requiresAuth: true
     }
   },
   {
@@ -49,7 +52,7 @@ const routes = [
     name: 'partner',
     component: PartnerView,
     meta: {
-      auth: true
+      requiresAuth: true
     }
   },
   {
@@ -57,7 +60,7 @@ const routes = [
     name: 'student',
     component: StudentView,
     meta: {
-      auth: true
+      requiresAuth: true
     }
   }
 ]
@@ -81,14 +84,15 @@ router.beforeEach((to, from, next) => {
           } 
           
           if (claims.admin) {
-            if (to.path.includes('/admin') == true) return next()
+            if (to.path.includes('/admin') == true) return next();
             else {
-              return next({ path: '/admin' })
+              return next({ path: '/admin' });
             }
           }
         })
     } else {
-      if (to.matched.some(record => record.meta.auth)) {
+      const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+      if (requiresAuth) {
         console.log('not logged in');
         next({
           path: '/',
