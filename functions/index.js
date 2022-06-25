@@ -21,15 +21,11 @@ exports.AddUserRole = functions.auth.user().onCreate(async (authUser) => {
         profile: {
           name: '',
           lastName: '',
-          birthDate: '',
           dni: '',
           email: authUser.email,
           cellphone: '',
           wsp: false,
-          adress: ''
         },
-        courses: [],
-        coursesRequests: []
       })
     } catch (error) {
       console.log(error)

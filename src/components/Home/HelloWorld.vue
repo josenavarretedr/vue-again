@@ -1,22 +1,13 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
     <button @click="getUUID()">Cambiar</button>
     <button @click="createUser()">Crear Usuario</button>
-    <h3>Ecosystem</h3>
   </div>
 </template>
 
 <script>
 import { v4 as uuid } from "uuid";
-import {firebaseAuth} from "../firebaseInit.js";
+import {firebaseAuth} from "../../firebaseInit.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
