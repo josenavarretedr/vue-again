@@ -2,10 +2,33 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/register">Register</router-link> |
-    <router-link to="/login">Login</router-link>
+    <router-link to="/login">Login</router-link> | 
+    <button @click="logOut()">Log out</button>
+
   </nav>
-  <router-view/>
+
+  <router-view />
 </template>
+
+<script>
+
+import { firebaseAuth } from "@/firebaseInit.js";
+
+export default {
+  methods: {
+    async logOut(){
+      try {
+        await firebaseAuth.signOut();
+        console.log("Se Salió de la sesión");
+        this.$router.push("/login");
+      } catch (e) {
+        console.log(e.message);
+      }        
+      }
+    }
+}
+</script>
+
 
 <style lang="scss">
 #app {

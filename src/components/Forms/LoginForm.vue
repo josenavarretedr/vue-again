@@ -27,32 +27,32 @@
 
 <script>
 import { firebaseAuth } from "@/firebaseInit.js";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "LoginForm",
 
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
   methods: {
     async loginUser() {
       try {
-        const userCredential = await signInWithEmailAndPassword(
+        await signInWithEmailAndPassword(
           firebaseAuth,
           this.email,
           this.password
         );
-        console.log(userCredential.user.uid);
+        console.log("Se inició sesión");
+        this.$router.push('/in');
       } catch (e) {
         console.log(e.message);
       }
     },
-  },
-  created() {
-    onAuthStateChanged(firebaseAuth, async (userAuth) => {
-      if (userAuth) {
-        const tokenResult = await firebaseAuth.currentUser.getIdTokenResult();
-        console.log(tokenResult.claims);
-      }
-    });
   },
 };
 </script>

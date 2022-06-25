@@ -1,14 +1,15 @@
 <template>
   <div class="hello">
-    <button @click="getUUID()">Cambiar</button>
-    <button @click="createUser()">Crear Usuario</button>
+    <h1>
+      Hola desde el Home?
+    </h1>
+    <h3> {{vueUI}} </h3>
+    <button @click="getUUID()">Obtener UUID</button>
   </div>
 </template>
 
 <script>
 import { v4 as uuid } from "uuid";
-import {firebaseAuth} from "../../firebaseInit.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 export default {
@@ -16,20 +17,15 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return {
+      vueUI: "",
+    };
+  },
   methods: {
     getUUID() {
-      console.log(uuid());
-    },
-    async createUser() {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(firebaseAuth,
-          "k@k.com",
-          "yosoyrinsa"
-        );
-        console.log(userCredential.user);
-      } catch (e) {
-        console.log(e.message);
-      }
+      const uuidGenerated = uuid();
+      this.vueUI = uuidGenerated;
     },
   },
 };

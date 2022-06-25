@@ -18,15 +18,7 @@
 
       <button @click="createUser()">Create</button>
     </div>
-    <pre>
-      {{ currentUser }}
-    </pre>
     <button @click="logOut()">Log out</button>
-    <button @click="deleteAccount()">Delete</button>
-
-    <div class="other">
-      <router-link :to="{ name: 'login' }">Login</router-link>
-    </div>
   </div>
 </template>
 
@@ -34,7 +26,6 @@
 import { firebaseAuth } from "@/firebaseInit.js";
 import {
   createUserWithEmailAndPassword,
-  deleteUser,
 } from "firebase/auth";
 
 export default {
@@ -68,19 +59,6 @@ export default {
         await firebaseAuth.signOut();
         console.log("Se Salió de la sesión");
         this.$router.push("/login");
-      } catch (e) {
-        console.log(e.message);
-      }
-    },
-    async deleteAccount() {
-      try {
-        const user = firebaseAuth.currentUser;
-        if (user !== null) {
-          await deleteUser(this.currentUser);
-          console.log("Se borro al usuario de la sesión");
-        } else {
-          console.log("No hay nada que eliminar");
-        }
       } catch (e) {
         console.log(e.message);
       }

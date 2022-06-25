@@ -5,6 +5,7 @@ import PartnerView from '@/views/PartnerView.vue';
 import StudentView from '@/views/StudentView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
+import PlataformaView from '@/views/PlataformaView.vue';
 
 import { firebaseAuth } from "../firebaseInit.js";
 
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/in',
+    name: 'in',
+    component: PlataformaView,
   },
   {
     path: '/register',
@@ -66,13 +72,15 @@ router.beforeEach((to, from, next) => {
   firebaseAuth.onAuthStateChanged(userAuth => {
     if (userAuth) {
       firebaseAuth.currentUser.getIdTokenResult()
-        .then(function ({ claims }) {
+        .then(({ claims }) => {
           if (claims.student) {
-            if (to.path.includes('/student') == true) return next()
+            if (to.path.includes('/in') == true) return next()
             else {
-              return next({ path: '/student' })
+              return next({ path: '/in' })
             }
-          } else if (claims.admin) {
+          } 
+          
+          if (claims.admin) {
             if (to.path.includes('/admin') == true) return next()
             else {
               return next({ path: '/admin' })
@@ -81,6 +89,7 @@ router.beforeEach((to, from, next) => {
         })
     } else {
       if (to.matched.some(record => record.meta.auth)) {
+        console.log('not logged in');
         next({
           path: '/',
           query: {
